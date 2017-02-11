@@ -1,0 +1,11 @@
+#!/bin/bash
+
+BRIGHT=$(kdialog --slider "Adjust Brightness:" 1 25 24)
+
+if [ "$?" = 1 ]; then
+    cd /sys/class/backlight/intel_backlight
+    BRIGHT=$(( $BRIGHT * 100 ))
+    kdesudo --caption Brightness -d --comment "Enter sudo (Super User) password to permit screen brightness changes. This works only on Linux systems using Intel Display card." -c "echo $BRIGHT > brightness"
+fi
+
+exit
